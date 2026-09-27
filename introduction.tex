@@ -1,5 +1,15 @@
 \section{Introduction}
 
+\bo{text below should be changed because it has several positioning issues}
+
+\bo{The revised message should be: When an agent successfully reproduces a research result, to what extent does that success imply that it faithfully evaluated the supplied artifact? What kinds of interventions break that correspondence? Can we detect those changes in a systematic way?}
+
+\bo{Or, more precisely: What interventions should count as legitimate artifact operation, and how do we observe when an agent crosses that boundary?}
+
+\bo{For \aebench, justify every decision. One thing to keep in mind is answering these questions ``We need feature/decision X because ...''}
+
+\bo{The issue with current agentic artifact evaluation (and agentic reproducibility, more boradly) is that these frameworks largely check the final result. However, I don't know of any work that makes the point that agent interventions that could help/make the artifact run (e.g., fix missing dependencies, broken enviornmnet variables, etc.) may alter measurement conditions. Probably adding missing dependencies is okay and won't affect much, but fixing hardcoded values or even worse -- small bugs in scripts, could.}
+
 Artifact Evaluation (AE) is a community-driven process intended to improve the long-term value of papers accepted at computer systems conferences. Authors submit code, data, and experimental results for review so that others can reproduce, compare, and extend the work. Many venues recognize successful artifact evaluation through typically one or more of three badges: Artifact Available, Artifact Functional, and Results Reproduced. Artifact Available means the artifact is publicly archived. Artifact Functional means reviewers were able to install or exercise it successfully. Results Reproduced means the paper's main results were obtained by someone other than the authors using the provided artifact.
 
 A core premise of artifact evaluation is to ensure artifacts provide evidence to support the main paper's claims. In practice, however, reviewers often reach that scientific question only after substantial operational work: reconstructing environments, repairing build assumptions, preparing workloads, and producing interpretable outputs.
