@@ -1,14 +1,23 @@
 \section{Introduction}
 
-\bo{text below should be changed because it has several positioning issues}
+\bo{New structure ------}
 
-\bo{The revised message should be: When an agent successfully reproduces a research result, to what extent does that success imply that it faithfully evaluated the supplied artifact? What kinds of interventions break that correspondence? Can we detect those changes in a systematic way?}
+\begin{enumerate}
+  \item Modern agents are increasingly capable of running/operating software systems.
+  \item Most benchmarks reward transformative work: make code compile, make tests pass, produce result X (better example for last one)
+  \item However, operating software also means monitoring/observing, so in this evaluation-oriented tasks altering the system chan change the measurement
+  \item So at this point we need to establish the main RQ: does the agent know when intervention is appropriate? do agents have that capability?
+  \item Artifact evaluation is well suited to study this kind of questions: it requires substantial operability work, but the goal is not simply produce a set of results; instead the process itself produce the results so that under a particular evaluation procedure the system behaves as describe in the spec (the paper)
+  \item So how is artifact evaluation unfold in practice? Here we summarize the key observations from our mini-study from conference AEs
+  \item Explain why final-result-only is not enough to test these capabilities (might cam before the previous item, however); not sure how easy it is to come up with examples from our dataset
+  \item We acknowledge that agentic reproducibility is a emerging field and that existing work already shows agents can reconstruct papers, execute provided research code, generate reproduction scripts, and automate parts of artifact evaluation (cite all relevant literature here)
+  \item But there is still an important open question: whether agents can operate prototypes/systems while respecting the semantics of an evaluative task
+  \item Now we can introduce \aebench for answering this question
+  \item The four stages should be presented as a diagnosis support/structure for identifying this agent capability
+  \item Missing at this point: findings and contributions (wrong: the current draft ends with architecture)
+\end{enumerate}
 
-\bo{Or, more precisely: What interventions should count as legitimate artifact operation, and how do we observe when an agent crosses that boundary?}
-
-\bo{For \aebench, justify every decision. One thing to keep in mind is answering these questions ``We need feature/decision X because ...''}
-
-\bo{The issue with current agentic artifact evaluation (and agentic reproducibility, more broadly) is that these frameworks largely check the final result. However, I don't know of any work that makes the point that agent interventions that could help/make the artifact run (e.g., fix missing dependencies, broken environment variables, etc.) may alter measurement conditions. Probably adding missing dependencies is okay and won't affect much, but fixing hardcoded values or even worse -- small bugs in scripts, could.}
+\bo{------}
 
 \bo{The high-level research question: Can an agent distinguish between tasks where it should intervene to simply satisfy a goal versus tasks where it should preserve what is being observed so that the result remains meaningful? More boradly, agents today are good at detecting a failure, diagnosing it, changing something/repair, then retry. But we want to actaully investigate if they're good at detecting a failure, understand the task semantics, determine whether changing/repair is acutally permitted for this particular failure, preserve the original observation if that matters in this situation, and intervine only within acceptable conditions.}
 
