@@ -1,5 +1,8 @@
 \section{Introduction}
 
+
+\bo{The high-level research question: Can an agent distinguish between tasks where it should intervene to simply satisfy a goal versus tasks where it should preserve what is being observed so that the result remains meaningful? More boradly, agents today are good at detecting a failure, diagnosing it, changing something/repair, then retry. But we want to actaully investigate if they're good at detecting a failure, understand the task semantics, determine whether changing/repair is acutally permitted for this particular failure, preserve the original observation if that matters in this situation, and intervine only within acceptable conditions.}
+
 \bo{New structure ------}
 
 \begin{enumerate}
@@ -19,7 +22,9 @@
 
 \bo{------}
 
-\bo{The high-level research question: Can an agent distinguish between tasks where it should intervene to simply satisfy a goal versus tasks where it should preserve what is being observed so that the result remains meaningful? More boradly, agents today are good at detecting a failure, diagnosing it, changing something/repair, then retry. But we want to actaully investigate if they're good at detecting a failure, understand the task semantics, determine whether changing/repair is acutally permitted for this particular failure, preserve the original observation if that matters in this situation, and intervine only within acceptable conditions.}
+\bo{Now this is the logical chain: Agents are good at changing systems to reach goals. Some tasks require observing rather than ``freely'' changing the system. Artifact evaluation is a real, demanding example of such a task (with the mini-study to back this up). In reality, reviewers frequently encounter failures requiring judgment and intervention. Thus, final result success goals may mischaractrize the agents capability of operating and observing a system. Exising reproducibility benchmakrs/agents don't fully answer things question. So, we designed \aebench explicitly to study this question. Here is what \aebench has special that others don't have. Here is what we learn about running agents on \aebench.}
+
+\bo{--- Old intro ---}
 
 Artifact Evaluation (AE) is a community-driven process intended to improve the long-term value of papers accepted at computer systems conferences. Authors submit code, data, and experimental results for review so that others can reproduce, compare, and extend the work. Many venues recognize successful artifact evaluation through typically one or more of three badges: Artifact Available, Artifact Functional, and Results Reproduced. Artifact Available means the artifact is publicly archived. Artifact Functional means reviewers were able to install or exercise it successfully. Results Reproduced means the paper's main results were obtained by someone other than the authors using the provided artifact.
 ~\bo{This paragraph became too long. I guess my original idea was to say this: 
