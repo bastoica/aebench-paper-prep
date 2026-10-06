@@ -1,1 +1,39 @@
 \section{Design}
+
+\aebench is a framework for running and evaluating AI coding agents on artifact evaluation tasks. 
+The main feature of \aebench is running the agents and recording runtime information
+  to allow to validate whether or not the artifact actually ran the artifact and 
+  didn't fake the results by copying them from the paper or artifact repository 
+  through repository history.
+  
+\aebench runs an agent in a controlled environment, allows it to attempt the documented 
+  reproduction procedure documented in the README file of the artifact, evaluates the result 
+  using case specific checks which we called oracles, and checks the commands that 
+  the agent runs against the README.
+
+We design \aebench to implement both the execution framework and the evaluation framework
+  but the two are separated and agents cannot see the evaluation stage.
+
+\begin{itemize}
+  \item \aebench execution framework prepares the artifact, launches an AI agent, manages its environment, and records what happens.
+  \item \aebench evaluation framework independently checks whether the agent successfully reproduced the artifact's expected behavior or results.
+\end{itemize}
+
+
+At a high level, AEBench has seven functional components.
+
+\begin{enumerate}
+  \item CLI and configuration component for user commands, settings, case selection, agent/model options
+
+  \item Artifact loading and validation which includes artifact configuration, artifact source, README, reproduction criteria
+
+  \item Artifact running / runtime and orchestration which coordinates preparation, agent execution, oracle evaluation, and results saving
+
+  \item Runtime backend which has the local or Docker execution, workspace and container lifecycle
+
+  \item Agent running logic, including prompts, credentials, agent commands, and configuration for specific agent
+
+  \item Oracle evaluation that check environment, build, preparation, and experiment results
+
+  \item Results, logs, and traces which all go into a llm-as-a-judge module that checks whether the agent has actually 
+\end{enumerate}
