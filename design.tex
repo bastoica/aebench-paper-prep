@@ -8,7 +8,7 @@ The main feature of \aebench is running the agents and recording runtime informa
   
 \aebench runs an agent in a controlled environment, allows it to attempt the documented 
   reproduction procedure documented in the README file of the artifact, evaluates the result 
-  using case specific checks which we called oracles, and checks the commands that 
+  using artifact specific checks which we called oracles, and checks the commands that 
   the agent runs against the README.
 
 We design \aebench to implement both the execution framework and the evaluation framework
@@ -23,7 +23,7 @@ We design \aebench to implement both the execution framework and the evaluation 
 At a high level, AEBench has seven functional components.
 
 \begin{enumerate}
-  \item CLI and configuration component for user commands, settings, case selection, agent/model options
+  \item CLI and configuration component for user commands, settings, artifact selection, agent/model options
 
   \item Artifact loading and validation which includes artifact configuration, artifact source, README, reproduction criteria
 
@@ -37,3 +37,31 @@ At a high level, AEBench has seven functional components.
 
   \item Results, logs, and traces which all go into a llm-as-a-judge module that checks whether the agent has actually 
 \end{enumerate}
+
+\subsection{configuration management module}
+
+The configuration module is particularly important because it controls application and artifact settings. 
+It determines which artifact is reproduced, what environment the agent receives, 
+  what instructions it sees, and which conditions determine its score.
+
+The goal of \aebench is repeatability and reproducibility. So \aebench preserves:
+
+First, the temporary workspace and permanent artifact-run output are different directories. So when the workspace 
+  is removed, the report and logs should remain accessible through the artifact-run 
+  output directory.
+
+Second, retaining a failed workspace requires two settings to interact. 
+  By default, that option is false, so  workspaces are not explicitly cleaned up at finalization.
+
+Third, global default convifuraitons do not uniformly override artifact settings. 
+  For experimental runs, the effective configuration 
+  needs to be recorded after resolution, not inferred solely from environment variables.
+
+
+\subsection{Framework orchestration}
+
+\subsection{Agent execution}
+
+\subsection{Monitoring and reporting}
+
+\subsection{Artifact results and instruction following checks}
