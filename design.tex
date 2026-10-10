@@ -76,6 +76,38 @@ This module is responsible for the following workflow:
     and clean up resources.
 \end{itemize}
 
+\subsection{Oracle evaluation}
+
+\aenbehc separates agent execution from artifact evaluation. 
+The agent is given an artifact and asked to reproduce its results as documented 
+  by the authors in the paper and README. 
+Once the agent finishes, the oracle independently inspects the resulting 
+  environment, files, executables, and experimental outputs.
+
+The oracle subsystem answers four questions:
+
+\begin{itemize}
+  \item Did the agent prepare the required execution environment?
+  \item Did it successfully build or install the artifact?
+  \item Did it prepare the required benchmarks and experimental inputs?
+  \item Did it execute the experiments and reproduce the expected results?
+\end{itemize}
+
+Each question corresponds to one evaluation phase. Each phase contains one or more checks.
+
+The main breakdown of this module is:
+
+\begin{item}
+  \item A phase is the unit of scoring.
+  \item A check is the unit of verification inside a phase.
+  \item An executor sub-modules determines where the check runs: on the host, in the agent's resulting environment, or in a separate Docker image.
+  \item An oracle result aggregates the four phase outcomes into a score.
+\end{itemize}
+
+Importantly, the evaluation is artifact-specific and not just a generic reproduction test. 
+\aebench supplies the framework, check primitives, and execution mechanisms. 
+Each artifact supplies its own Python oracle defining what counts as successful reproduction.
+
 \subsection{Agent execution}
 
 \subsection{Monitoring and reporting}
