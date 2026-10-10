@@ -53,12 +53,28 @@ First, the temporary workspace and permanent artifact-run output are different d
 Second, retaining a failed workspace requires two settings to interact. 
   By default, that option is false, so  workspaces are not explicitly cleaned up at finalization.
 
-Third, global default convifuraitons do not uniformly override artifact settings. 
+Third, global default configurations do not uniformly override artifact settings. 
   For experimental runs, the effective configuration 
   needs to be recorded after resolution, not inferred solely from environment variables.
 
 
 \subsection{Framework orchestration}
+
+\aebench orchestration module takes a artifact (\bo{should we say it's already verified and got three badges? probably this information should be in the evaluation section}) 
+  and executes its reproduction experiment from beginning to end.
+This module is responsible for the following workflow:
+\begin{itemize}
+  \item Preparation: Resolve the artifact, obtain the artifact source, create a workspace,
+    generate the agent's prompt, and start its execution environment.
+  \item  Agent execution: Launch the selected agent, enforce its time limit, 
+    and collect its execution result.
+  \item  State preservation: Stop the agent and, for configured Docker runs, save the 
+    resulting container filesystem so the oracle can inspect it.
+  \item  Evaluation: Invoke the artifact-specific oracles against the 
+    resulting artifact and environment.
+  \item  Finalization: Combine the agent and oracle results, write reports, 
+    and clean up resources.
+\end{itemize}
 
 \subsection{Agent execution}
 
