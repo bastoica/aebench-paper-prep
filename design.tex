@@ -78,7 +78,7 @@ This module is responsible for the following workflow:
 
 \subsection{Oracle evaluation}
 
-\aenbehc separates agent execution from artifact evaluation. 
+\aebench separates agent execution from artifact evaluation. 
 The agent is given an artifact and asked to reproduce its results as documented 
   by the authors in the paper and README. 
 Once the agent finishes, the oracle independently inspects the resulting 
@@ -97,7 +97,7 @@ Each question corresponds to one evaluation phase. Each phase contains one or mo
 
 The main breakdown of this module is:
 
-\begin{item}
+\begin{itemize}
   \item A phase is the unit of scoring.
   \item A check is the unit of verification inside a phase.
   \item An executor sub-modules determines where the check runs: on the host, in the agent's resulting environment, or in a separate Docker image.
@@ -109,6 +109,26 @@ Importantly, the evaluation is artifact-specific and not just a generic reproduc
 Each artifact supplies its own Python oracle defining what counts as successful reproduction.
 
 \subsection{Agent execution}
+
+The agent execution module takes a artifact and a selected AI agent, then runs that agent as a 
+  non-interactive process.
+
+Specifically, it has five responsibilities:
+
+\begin{enumerate}
+  \item Construct the task presented to the agent.
+  \item Prepare the credentials and environment needed by the selected agent.
+  \item Launch agent with a model, permissions, and reasoning settings.
+  \item Enforce an execution timeout and capture the agent's output.
+  \item Return a compact process result to the orchestrator.
+\end{enumerate}
+
+The main design choice here is that \aebench delegates agent decisions to external coding agent CLIs. 
+It does not implement its own LLM reasoning loop, tool-calling engine, or action planner. 
+Thus, aqgents determine which commands to execute, which files to inspect, and 
+  what changes to make.
+Consequently, agent behavior depends on the particular version of the external agent CLI 
+  and the underlying LLM model.
 
 \subsection{Monitoring and reporting}
 
