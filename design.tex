@@ -132,4 +132,29 @@ Consequently, agent behavior depends on the particular version of the external a
 
 \subsection{Monitoring and reporting}
 
+\aebench has modules responsible for recording agent activity, collecting command-level execution evidence, 
+  preserving experiment results, and visualizing the resulting trajectories.
+
+The relevant logic is divided into three parts:
+
+\begin{itemize}
+  \item Monitoring: capture commands executed through instrumented Bash.
+  \item Reporting: produce structured results, logs, and human-readable reports.
+  \item Trace visualization: converts recorded agent events into a browsable execution history.
+\end{itemize}
+
+There is an important distinction between them. 
+Monitoring records what the agent does, reporting records the outcome of the run, 
+  and trace visualization reconstructs a view of the agent's execution. 
+None of these, by itself, decides whether the agent reproduced the artifact correctly. 
+The oracle remains responsible for that decision.
+
+Similarly, the oracles are not responsible for validating that the agent actually 
+  exercised the oracle.
+For that \aebench relies on two logs: the trajectory produced by the agent and 
+  the command list that \aebench runtime itself records.
+Then it uses an LLM-as-a-judge to compare the two, and then against the 
+  README of the artifact.
+
+
 \subsection{Artifact results and instruction following checks}
