@@ -20,9 +20,8 @@ We design \aebench to implement both the execution framework and the evaluation 
 \end{itemize}
 
 
-\begin{wrapfigure}{L}{0.5\textwidth}
+\begin{figure}[ht!]
     \centering
-    \vspace{-0.5em}
     \includegraphics[width=\linewidth]{figs/aebench-workflow.pdf}
     \caption{\small \aebench runs an agent that operates an artifact 
     inside a containerized workspace and executing commands through a proxy 
@@ -30,8 +29,7 @@ We design \aebench to implement both the execution framework and the evaluation 
     final workspace state at each execution stage using stage-specific 
     oracles and generates the evaluation score and execution reports.}
     \label{fig:aebench-overview}
-    \vspace{-0.5em}
-\end{wrapfigure}
+\end{figure}
 
 At a high level, AEBench has seven functional components.
 
