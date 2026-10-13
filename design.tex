@@ -104,10 +104,12 @@ This module is responsible for the following workflow:
 \aebench separates the agent execution from artifact evaluation.
 The agent is given an artifact and asked to reproduce its results as documented
   by the authors in the paper and README.
-Once the agent finishes, the oracle independently inspects the resulting
+Once the agent finishes, the oracle code independently inspects the resulting
   environment, files, executables, and experimental outputs.
 For Docker runs, the checks may also need the saved container state,
   and not only the files that are visible in the workspace.
+This is useful for tools installed inside the container that are not 
+  present on the host machine.
 
 The oracle subsystem answers four questions:
 
@@ -118,8 +120,12 @@ The oracle subsystem answers four questions:
   \item Did it execute the experiments and reproduce the expected results?
 \end{itemize}
 
-Each question corresponds to one evaluation phase. Each phase contains one or more checks.
-A phase can contain several checks because, for example, there may be multiple required tools or files.
+Each question corresponds to one evaluation phase. 
+Each phase contains one or more checks.
+A phase can contain several checks because, for example, there 
+  may be multiple required tools or files.
+For example, the build phase can check generated executables, and 
+  experiment checks can inspect result files.
 
 The main breakdown of this module is:
 
@@ -128,12 +134,16 @@ The main breakdown of this module is:
   \item A check is the unit of verification inside a phase. Checks can test paths,
     run commands, or compare numeric results with reference values.
   \item An executor sub-module determines where the check runs: on the host, in the agent's resulting environment, or in a separate Docker image.
-  \item An oracle result aggregates the four phase outcomes into a score.
+    The target is configured per phase, so different phases of an artifact may use different places.
+  \item An oracle result aggregates the outcomes of the four phases into a score.
 \end{itemize}
 
-Importantly, the evaluation is artifact-specific and not just a generic reproduction test.
-\aebench supplies the framework, check primitives, and execution mechanisms.
-Each artifact supplies its own Python oracle defining what counts as successful reproduction.
+Importantly, the evaluation is artifact specific instead of just an e-dn-to-end generic 
+  reproduction check.
+\aebench provides a running framework, check primitives, and execution mechanisms.
+Each artifact provides its own Python oracle defining what counts as successful reproduction.
+The case also keeps reference data in \texttt{refs/}, such as expected numbers or lists of results,
+  and the oracle chooses how much difference is acceptable for that particular experiment.
 
 \subsection{Agent execution}
 
