@@ -101,11 +101,13 @@ This module is responsible for the following workflow:
 
 \subsection{Oracle evaluation}
 
-\aebench separates agent execution from artifact evaluation. 
-The agent is given an artifact and asked to reproduce its results as documented 
-  by the authors in the paper and README. 
-Once the agent finishes, the oracle independently inspects the resulting 
+\aebench separates the agent execution from artifact evaluation.
+The agent is given an artifact and asked to reproduce its results as documented
+  by the authors in the paper and README.
+Once the agent finishes, the oracle independently inspects the resulting
   environment, files, executables, and experimental outputs.
+For Docker runs, the checks may also need the saved container state,
+  and not only the files that are visible in the workspace.
 
 The oracle subsystem answers four questions:
 
@@ -117,18 +119,20 @@ The oracle subsystem answers four questions:
 \end{itemize}
 
 Each question corresponds to one evaluation phase. Each phase contains one or more checks.
+A phase can contain several checks because, for example, there may be multiple required tools or files.
 
 The main breakdown of this module is:
 
 \begin{itemize}
   \item A phase is the unit of scoring.
-  \item A check is the unit of verification inside a phase.
-  \item An executor sub-modules determines where the check runs: on the host, in the agent's resulting environment, or in a separate Docker image.
+  \item A check is the unit of verification inside a phase. Checks can test paths,
+    run commands, or compare numeric results with reference values.
+  \item An executor sub-module determines where the check runs: on the host, in the agent's resulting environment, or in a separate Docker image.
   \item An oracle result aggregates the four phase outcomes into a score.
 \end{itemize}
 
-Importantly, the evaluation is artifact-specific and not just a generic reproduction test. 
-\aebench supplies the framework, check primitives, and execution mechanisms. 
+Importantly, the evaluation is artifact-specific and not just a generic reproduction test.
+\aebench supplies the framework, check primitives, and execution mechanisms.
 Each artifact supplies its own Python oracle defining what counts as successful reproduction.
 
 \subsection{Agent execution}
