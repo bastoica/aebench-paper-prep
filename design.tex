@@ -81,20 +81,22 @@ For experimental runs, the effective configuration
 
 \subsection{Framework orchestration}
 
-\aebench orchestration module takes a artifact (\bo{should we say it's already verified and got three badges? probably this information should be in the evaluation section}) 
+\aebench orchestration module takes an artifact (\bo{should we say it's already verified and got three badges? probably this information should be in the evaluation section})
   and executes its reproduction experiment from beginning to end.
+It coordinates the agent run and the oracle checks.
 This module is responsible for the following workflow:
 \begin{itemize}
-  \item Preparation: Resolve the artifact, obtain the artifact source, create a workspace,
+  \item Preparation: Resolve the artifact and its configuration, obtain the artifact source, create a workspace,
     generate the agent's prompt, and start its execution environment.
-  \item  Agent execution: Launch the selected agent, enforce its time limit, 
-    and collect its execution result.
-  \item  State preservation: Stop the agent and, for configured Docker runs, save the 
-    resulting container filesystem so the oracle can inspect it.
-  \item  Evaluation: Invoke the artifact-specific oracles against the 
+    The prompt tells the agent what it should reproduce.
+  \item Agent execution: Launch the selected agent, enforce its time limit,
+    and collect its execution result, including whether the agent terminated or timed out.
+  \item State preservation: Stop the agent and, for configured Docker runs, save the
+    resulting container filesystem so the oracles can inspect it, and not only the logs.
+  \item Evaluation: Invoke the artifact-specific oracles against the
     resulting artifact and environment.
-  \item  Finalization: Combine the agent and oracle results, write reports, 
-    and clean up resources.
+  \item Finalization: Combine the agent and oracle results, write reports,
+    and clean up temporary resources while keeping the run outputs.
 \end{itemize}
 
 \subsection{Oracle evaluation}
