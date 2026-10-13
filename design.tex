@@ -51,21 +51,31 @@ At a high level, AEBench has seven functional components.
 
 \subsection{configuration management module}
 
-The configuration module is particularly important because it controls application and artifact settings. 
-It determines which artifact is reproduced, what environment the agent receives, 
+The configuration module is particularly important because it controls application and artifact settings.
+It determines which artifact is reproduced, what environment the agent receives,
   what instructions it sees, and which conditions determine its score.
+The module also manages the configuration files associated with each artifact,
+  including the runtime settings and the different oracle checks that are used during evaluation.
 
-The goal of \aebench is repeatability and reproducibility. So \aebench preserves:
+The goal of \aebench is repeatability and reproducibility. 
+So \aebench preserves some information about the execution and the 
+  configuration used for each run.
 
-First, the temporary workspace and permanent artifact-run output are different directories. So when the workspace 
-  is removed, the report and logs should remain accessible through the artifact-run 
+First, the temporary workspace and permanent artifact-run output are different directories.
+The workspace contains the files used by the agent during execution, while the output directory
+  stores information produced by the framework.
+So when the workspace is removed, the report and logs should remain accessible through the artifact-run
   output directory.
 
-Second, retaining a failed workspace requires two settings to interact. 
-  By default, that option is false, so  workspaces are not explicitly cleaned up at finalization.
+Second, retaining a failed workspace requires two settings to interact.
+By default, that option is false, so workspaces are not explicitly cleaned up at finalization.
+This is also related to debugging, since keeping the workspace permits to inspect what happened
+  during a failed artifact reproduction.
 
-Third, global default configurations do not uniformly override artifact settings. 
-  For experimental runs, the effective configuration 
+Third, global default configurations do not uniformly override artifact settings.
+Some options are inherited from the global configuration while others are defined for
+  each artifact separately.
+For experimental runs, the effective configuration
   needs to be recorded after resolution, not inferred solely from environment variables.
 
 
