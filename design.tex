@@ -49,35 +49,52 @@ At a high level, AEBench has seven functional components.
   \item Results, logs, and traces which all go into a llm-as-a-judge module that checks whether the agent has actually 
 \end{enumerate}
 
-\subsection{configuration management module}
+\subsection{Configuration Management}
 
-The configuration module is particularly important because it controls application and artifact settings.
+The configuration module is particularly important because it controls 
+  application and artifact settings.
 It determines which artifact is reproduced, what environment the agent receives,
   what instructions it sees, and which conditions determine its score.
 The module also manages the configuration files associated with each artifact,
-  including the runtime settings and the different oracle checks that are used during evaluation.
+  including the runtime settings and the different oracle checks that are used 
+    during evaluation.
+These settings are not necessarily all specified in one place, because some are part 
+  of the artifact definition and others depend on how \aebench is executed.
+For example, the artifact configuration describes the different stages and requirements,
+  whereas the execution settings also determine which agent and runtime backend are used.
 
-The goal of \aebench is repeatability and reproducibility. 
-So \aebench preserves some information about the execution and the 
-  configuration used for each run.
+The goal of \aebench is repeatability and reproducibility. So \aebench preserves
+  some information about the execution and the configuration used for each run.
+This is important also because two executions of the same artifact may not use exactly
+  the same configuration, even if the artifact itself has not been modified.
 
 First, the temporary workspace and permanent artifact-run output are different directories.
-The workspace contains the files used by the agent during execution, while the output directory
-  stores information produced by the framework.
-So when the workspace is removed, the report and logs should remain accessible through the artifact-run
-  output directory.
+The workspace contains the files used by the agent during execution, while 
+  the output directory stores information produced by the framework, 
+  like logs and evaluation reports.
+The workspace is also where the agent may modify source files, install software, or generate
+  intermediate files during the reproduction procedure.
+So when the workspace is removed, the report and logs should remain accessible 
+  through the artifact-run output directory.
 
 Second, retaining a failed workspace requires two settings to interact.
-By default, that option is false, so workspaces are not explicitly cleaned up at finalization.
-This is also related to debugging, since keeping the workspace permits to inspect what happened
-  during a failed artifact reproduction.
+By default, that option is false, so workspaces are not explicitly cleaned 
+  up at finalization.
+This is also related to debugging, since keeping the workspace permits to inspect 
+  what happened during a failed artifact reproduction.
+In particular, the workspace may contain modifications made by the agent that are 
+  not immediately visible from the final report, and therefore inspecting these 
+  files can be useful.
 
 Third, global default configurations do not uniformly override artifact settings.
-Some options are inherited from the global configuration while others are defined for
+  Some options are inherited from the global configuration while others are defined for
   each artifact separately.
-For experimental runs, the effective configuration
+The framework needs to resolve these settings before starting the execution,
+  so that the runtime and the oracle evaluation use the corresponding values.
+  For experimental runs, the effective configuration
   needs to be recorded after resolution, not inferred solely from environment variables.
-
+This is necessary especially when comparing different agents, since differences in the
+  configuration may influence the evaluation results.
 
 \subsection{Framework orchestration}
 
@@ -142,7 +159,7 @@ Importantly, the evaluation is artifact specific instead of just an e-dn-to-end 
   reproduction check.
 \aebench provides a running framework, check primitives, and execution mechanisms.
 Each artifact provides its own Python oracle defining what counts as successful reproduction.
-The case also keeps reference data in \texttt{refs/}, such as expected numbers or lists of results,
+The artifact also keeps reference data in \texttt{refs/}, such as expected numbers or lists of results,
   and the oracle chooses how much difference is acceptable for that particular experiment.
 
 \subsection{Agent execution}
