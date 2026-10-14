@@ -100,7 +100,8 @@ This is necessary especially when comparing different agents, since differences 
 
 \aebench orchestration module takes an artifact (\bo{should we say it's already verified and got three badges? probably this information should be in the evaluation section})
   and executes its reproduction experiment from beginning to end.
-It coordinates the agent run and the oracle checks.
+It coordinates the agent run, the runtime backend and the oracle checks.
+The sequence matters because the oracles use the state left by the agent.
 This module is responsible for the following workflow:
 \begin{itemize}
   \item Preparation: Resolve the artifact and its configuration, obtain the artifact source, create a workspace,
