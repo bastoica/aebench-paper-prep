@@ -104,16 +104,20 @@ It coordinates the agent run, the runtime backend and the oracle checks.
 The sequence matters because the oracles use the state left by the agent.
 This module is responsible for the following workflow:
 \begin{itemize}
-  \item Preparation: Resolve the artifact and its configuration, obtain the artifact source, create a workspace,
+  \item Preparation: Resolve the requested artifact and its configuration, obtain 
+    the artifact source, create a workspace,
     generate the agent's prompt, and start its execution environment.
     The prompt tells the agent what it should reproduce.
-  \item Agent execution: Launch the selected agent, enforce its time limit,
+    The workspace is where the agent runs commands and eventually modifies files.
+  \item Agent execution: Launch the configured agent, enforce its time limit,
     and collect its execution result, including whether the agent terminated or timed out.
   \item State preservation: Stop the agent and, for configured Docker runs, save the
-    resulting container filesystem so the oracles can inspect it, and not only the logs.
+    resulting container filesystem so the oracles can inspect it.
+    Some checks need the generated files, even if these files do not appear in the console output.
   \item Evaluation: Invoke the artifact-specific oracles against the
     resulting artifact and environment.
-  \item Finalization: Combine the agent and oracle results, write reports,
+    The result of these checks is not necessarily the same as the exit status of the agent.
+  \item Finalization: Combine the agent and oracle results, write the reports,
     and clean up temporary resources while keeping the run outputs.
 \end{itemize}
 
