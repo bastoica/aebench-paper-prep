@@ -217,3 +217,27 @@ Then it uses an LLM-as-a-judge to compare the two, and then against the
 
 
 \subsection{Artifact results and instruction following checks}
+
+\aebench checks two different things. 
+The first is whether the artifact results are present and satisfy the 
+  artifact-specific oracles, without asking the agent if it succeeded. 
+The second is whether the agent followed the instructions in the README. 
+These two checks are related but not the same. 
+An agent may generate the expected files after changing the benchmark, 
+  or use another workload than the one requested. 
+In both cases the numbers may look correct, although the procedure 
+  was different.
+
+For artifact results, the oracle checks the environment, 
+  installed binaries, benchmark inputs and final output files, using checks 
+  and reference values defined for that case. 
+The four phases provide partial results, then the framework combines them 
+  in a final score and report.
+
+For instruction following, we compare the agent trajectory with the commands 
+  captured by the instrumented shell and with the README steps. 
+An LLM-as-ajudge compares these sources to identify skipped steps, 
+  additional commands, or changes that are not documented. 
+It is not always possible to associate one command with one output file. 
+This check gives an indication, but is not an exact proof of what 
+  generated a result.
