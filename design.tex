@@ -218,36 +218,33 @@ Then it uses an LLM-as-a-judge to compare the two, and then against the
 
 \subsection{Artifact results and instruction following checks}
 
-\aebench checks two different things (once agent stops). 
-The first is whether the artifact results are present and satisfy 
-  the artifact-specific oracles, without asking the agent if it 
-  succeeded. 
-The second is whether the agent followed the instructions in the README. 
+\aebench checks two different things after the agent stops. 
+First, whether the results satisfy the artifact-specific 
+  oracles, without asking the agent if it succeeded. 
+Second, whether the agent followed the README instructions. 
 
 These two checks are related but not the same. 
-An agent may generate the expected files after changing the benchmark, 
-  or use another workload than the one requested. 
+An agent may generate the expected files after changing the benchmark 
+  or using another workload. 
 In both cases the numbers may look correct, although the procedure 
   was different. 
-For example, it may edit a script to omit some expensive part 
-  and still produce the expected output filename.
+For example, it may edit a script to omit an expensive step and 
+  still produce the expected output filename.
 
-For artifact results, the oracle checks the environment, 
-  installed binaries, benchmark inputs and final output files, 
-  using checks and reference values defined for that case. 
-Checks are beyond file existence. 
+For artifact results, the oracle checks the environment, installed binaries, 
+  benchmark inputs and output files, using checks and reference 
+  values defined for that case. Checks go beyond file existence. 
 Some may execute a command, or compare numbers with a stored 
-  reference and a tolerance. The four phases provide partial results, 
-  then the framework combines them in a final score and report.
+  reference and tolerance. 
+The four phases provide partial results, then the framework combines them 
+  in a final score and report.
 
-For instruction following, we compare the agent trajectory with 
-  the commands captured by the instrumented shell and with 
-  the README steps. 
+For instruction following, we compare the agent trajectory, 
+  shell commands captured by instrumentation, and README steps. 
 An LLM judge compares these sources to identify skipped steps, 
-  additional commands, or changes that are not documented. 
-The shell log contains only observed commands, so some 
-  other agent operations may be missing. 
-It is not always possible to associate one command with one 
-  output file. 
+  extra commands, or changes not documented. 
+The shell log contains only observed commands, so some agent operations 
+  may be missing. It is not always possible to associate one 
+  command with one output file. 
 This check gives an indication, but is not an exact proof 
   of what generated a result.
