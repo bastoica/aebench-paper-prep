@@ -1,1 +1,106 @@
-\section{Related Work}
+\subsection{Related Work}
+
+We compare \aebench with similar recent works that use agents 
+  for reproducibility, build agents specifically for artifact evaluation,
+  or that build benchmarks to test both such agents.
+
+\paragraph{\aebench vs Artisan}
+Artisan~\cite{baek-arxiv26} is an agent for reproducing results from software
+  engineering papers by generating a standalone script for the reproduction.
+It evaluates 60 tasks from 23 papers and uses output and method judges to verify the
+  generated script, including checks against copying existing results.
+\aebench does not ask the agent to produce a separate reproduction script as the main
+  product.
+It runs an external coding agent on the provided artifact and checks the stages and
+  its resulting environment.
+
+\paragraph{\aebench vs ArtifactCopilot}
+ArtifactCopilot~\cite{wu-arxiv26} automates artifact evaluation by converting README
+  instructions into a dependency-aware graph, and then running the corresponding
+  operations.
+It also tracks the execution environment, handles errors, and compares the evaluation
+  with human badge decisions on 48 artifacts.
+This is quite close to \aebench, including the attention to commands and documented
+  steps.
+Our goal is more to compare external agents under independent oracles, and examine
+  their changes to the experimental procedure.
+
+\paragraph{\aebench vs CORE-Bench}
+CORE-Bench~\cite{siegel-tmlr25} evaluates agents that reproduce numerical results from
+  provided research code and data, using 270 tasks from 90 papers.
+The tasks have different difficulty levels and the agent must also find answers from
+  the execution outputs.
+\aebench instead uses artifact-specific checks for the environment, build, benchmark
+  preparation, and experiments.
+The distinction is that answering correctly about some results does not tell us
+  exactly which steps the agent performed.
+
+\paragraph{\aebench vs PaperBench}
+PaperBench~\cite{starace-icml25} evaluates whether an agent can replicate the work of
+  an AI paper, starting from its description and without using the original
+  implementation.
+It has 20 papers and a large hierarchy of grading rubrics, with an LLM judge to
+  evaluate the work produced by agents.
+This is a different task from \aebench, where the submitted artifact and its README
+  are already given.
+We are interested in operating that software correctly, and not in implementing a
+  replacement.
+
+\paragraph{\aebench vs REPRO-Bench}
+REPRO-Bench~\cite{hu-acl25} has 112 tasks from social science papers and asks agents
+  to assess reproducibility using the paper and its reproduction package.
+It also compares the assessment with existing human reproduction reports, so the
+  result is about the accuracy of that assessment.
+\aebench focuses instead on the actual operations needed to install and execute
+  systems artifacts.
+It records the different stages and checks their outcomes, even if the agent finishes
+  before reaching the experiments.
+
+\paragraph{\aebench vs DeployBench}
+DeployBench~\cite{wang-arxiv26} is a benchmark of 51 tasks for deploying research
+  artifacts from different domains onto an execution machine.
+It uses hidden checks that execute a designated experiment and verify outputs, and
+  studies when agents stop before the real task is completed.
+\aebench shares the interest in environment setup and execution, but breaks the
+  reproduction in four phases.
+We also retain the execution evidence, since a working environment by itself is not
+  the full reproduction.
+
+\paragraph{\aebench vs Heye et al.}
+Heye et al.~\cite{heye-bigdata25} study how LLMs can support artifact evaluation of
+  published security papers, with tools for rating, environment preparation and
+  detecting methodological issues.
+Their approach is directed to helping reviewers decide the reproducibility of
+  submissions, rather than benchmarking many external coding agents.
+\aebench also tries to reduce evaluation work, but its main output is a repeatable
+  agent run with checks and recorded activity.
+These are related goals, although the workflow and evaluation unit are different.
+
+\paragraph{\aebench vs MLSys AE Agent}
+Yang~\cite{yang-blog26} describes an artifact-evaluation agent deployed as a reviewer
+  at MLSys\textquotesingle26, connected with HotCRP and a real review machine.
+It reads papers, runs software, asks authors questions and prepares a badge decision,
+  so it is not only a simple benchmark run.
+\aebench is not a conference reviewer and does not manage the author discussion.
+Instead it provides repeatable cases and oracles to study what different agents do
+  when reproducing the same artifact.
+
+\paragraph{\aebench vs Reward Hacking Benchmark}
+The Reward Hacking Benchmark~\cite{thaman-icml26} gives tool-using agents tasks with
+  opportunities to skip verification, use shortcuts or tamper with what gets checked.
+It measures whether these shortcuts produce an undeserved success under different
+  model configurations.
+This is relevant to \aebench because agents may also change scripts or outputs to
+  finish the reproduction.
+However, our tasks come from real research artifacts, where a change can be a useful
+  repair or an invalid experiment.
+
+\paragraph{\aebench vs HackDetect}
+HackDetect~\cite{shao-arxiv26} audits agent benchmark traces to identify shortcuts and
+  explain when the obtained score does not represent the intended capability.
+It studies protocol validity across multiple benchmarks and estimates the effect of
+  exposed information on scores.
+\aebench has a related concern, but the reference procedure is the artifact README and
+  the expected research experiment.
+Our checks also need to inspect the machine state, not only decide if a benchmark
+  trace contains an exploit.
