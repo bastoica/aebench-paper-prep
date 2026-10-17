@@ -71,6 +71,35 @@ This is a substantial system for actual peer review, including comments and badg
 Instead it provides repeatable cases and oracles to study what different agents do
   when reproducing the same artifact.
 
+\paragraph{\aebench vs Heye et al.}
+Heye et al.~\cite{heye-bigdata25} present an LLM-based toolkit for supporting
+  artifact evaluation of security research papers.
+Their approach consists of three stages: estimating the reproducibility of
+  an artifact from its paper and documentation, preparing an execution
+  environment using an LLM agent, and detecting methodological problems
+  in the original research.
+The agent executes shell commands inside a Docker container, installs
+  dependencies and tries to resolve errors during execution.
+They evaluate their approach against human reproducibility assessments,
+  and their agent can prepare around 28\% of the artifacts previously
+  found runnable by human reviewers.
+This is close to \aebench, particularly the automated execution of
+  artifact instructions in isolated environments.
+
+However, Heye et al. mainly aim to reduce the manual work of reviewers,
+  and measure whether their agent can prepare a runnable environment.
+\aebench instead evaluates different coding agents on the reproduction
+  process, using artifact-specific oracles for environment setup, build,
+  benchmark preparation, and experiment execution.
+Interestingly, Heye et al. also report an agent attempting to comment out
+  an entire program to make it execute successfully, which would produce
+  an incorrect reproducibility assessment.
+They address this problem by modifying the agent prompts.
+We are interested in studying this kind of behavior more systematically,
+  including when agents change scripts, workloads, or configurations
+  to overcome failures, and whether these changes invalidate the
+  experiment even when the expected results are produced.
+
 \paragraph{\aebench vs CORE-Bench}
 CORE-Bench~\cite{siegel-tmlr25} evaluates agents that reproduce numerical results from
   provided research code and data, using 270 tasks from 90 papers.
@@ -111,16 +140,6 @@ It uses hidden checks that execute a designated experiment and verify outputs, a
   reproduction in four phases.
 We also retain the execution evidence, since a working environment by itself is not
   the full reproduction.
-
-\paragraph{\aebench vs Heye et al.}
-Heye et al.~\cite{heye-bigdata25} study how LLMs can support artifact evaluation of
-  published security papers, with tools for rating, environment preparation and
-  detecting methodological issues.
-Their approach is directed to helping reviewers decide the reproducibility of
-  submissions, rather than benchmarking many external coding agents.
-\aebench also tries to reduce evaluation work, but its main output is a repeatable
-  agent run with checks and recorded activity.
-These are related goals, although the workflow and evaluation unit are different.
 
 \paragraph{\aebench vs Reward Hacking Benchmark}
 The Reward Hacking Benchmark~\cite{thaman-icml26} gives tool-using agents tasks with
