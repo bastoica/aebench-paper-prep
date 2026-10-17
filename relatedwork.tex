@@ -122,14 +122,34 @@ We are interested in operating that software correctly, and not in implementing 
   replacement.
 
 \paragraph{\aebench vs REPRO-Bench}
-REPRO-Bench~\cite{hu-acl25} has 112 tasks from social science papers and asks agents
-  to assess reproducibility using the paper and its reproduction package.
-It also compares the assessment with existing human reproduction reports, so the
-  result is about the accuracy of that assessment.
-\aebench focuses instead on the actual operations needed to install and execute
-  systems artifacts.
-It records the different stages and checks their outcomes, even if the agent finishes
-  before reaching the experiments.
+
+REPRO-Bench~\cite{hu-acl25} evaluates whether AI agents can assess the
+  reproducibility of social science papers using the original paper and
+  its reproduction package.
+It contains 112 papers with existing human reproduction reports, which
+  provide a ground-truth reproducibility score from 1 to 4.
+The agents inspect the code, execute reproduction scripts and compare
+  the generated results with the findings reported in the paper.
+The authors also analyze agent trajectories and identify several execution
+  failures, including incorrect result comparisons, missing dependencies,
+  and problems locating files in the reproduction package.
+This is close to \aebench, as it evaluates different agents on real
+  research artifacts, and also investigates why agents fail during
+  reproduction.
+
+However, REPRO-Bench measures whether the agent correctly predicts the
+  reproducibility of a paper, using the human report as ground truth.
+An agent may obtain the correct score even if it did not execute the
+  reproduction procedure correctly.
+\aebench instead evaluates the execution itself, using artifact-specific
+  oracles for environment setup, build, benchmark preparation and
+  experiment execution.
+Also, REPRO-Bench analyzes agent trajectories to understand failures,
+  but does not separately score whether the agent followed the
+  documented procedure or introduced changes that invalidate it.
+We are interested in these changes, particularly when agents modify
+  scripts or experimental settings to overcome execution failures,
+  and obtain the expected results using a different procedure.
 
 \paragraph{\aebench vs DeployBench}
 DeployBench~\cite{wang-arxiv26} is a benchmark of 51 tasks for deploying research
