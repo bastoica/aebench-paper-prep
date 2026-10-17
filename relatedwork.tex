@@ -6,24 +6,35 @@ We compare \aebench with similar recent works that use agents
 
 \paragraph{\aebench vs Artisan}
 Artisan~\cite{baek-arxiv26} is an agent for reproducing results from software
-  engineering papers by generating a standalone script for the reproduction.
-It evaluates 60 tasks from 23 papers and uses output and method judges to verify the
-  generated script, including checks against copying existing results.
-\aebench does not ask the agent to produce a separate reproduction script as the main
-  product.
-It runs an external coding agent on the provided artifact and checks the stages and
-  its resulting environment.
+  engineering papers by generating a standalone script that can run 
+  independently of agent.
+It evaluates 60 tasks from 23 papers and uses output and method LLM-as-judges 
+  to verify the generated script, including checks against 
+  copying existing results.
+This script can be rerun, while the method judge tests more than numbers, 
+  including invalid methods.
+\aebench does not ask the agent to produce a separate 
+  reproduction script as the main product.
+Its independent script also gives executable evidence, but it is 
+  not the same artifact operation trace made by a general coding agent.
+It runs an external coding agent on the provided artifact and 
+  checks the stages and its resulting environment.
 
 \paragraph{\aebench vs ArtifactCopilot}
-ArtifactCopilot~\cite{wu-arxiv26} automates artifact evaluation by converting README
-  instructions into a dependency-aware graph, and then running the corresponding
-  operations.
-It also tracks the execution environment, handles errors, and compares the evaluation
-  with human badge decisions on 48 artifacts.
-This is quite close to \aebench, including the attention to commands and documented
-  steps.
-Our goal is more to compare external agents under independent oracles, and examine
-  their changes to the experimental procedure.
+ArtifactCopilot~\cite{wu-arxiv26} automates artifact evaluation by converting 
+  README instructions into a dependency-aware graph, and then running the operations 
+  in this graph.
+It also tracks the execution environment, handles errors, and compares the  
+  evaluation with human badge decisions on 48 artifacts.
+It also constructs a golden command set to represent important README commands 
+  assessing functional evaluation, which is a stronger verification 
+  than only checking files.
+This is quite close to \aebench, including the attention to commands and 
+  documented steps.
+Its graph supports error recovery and tracking execution state, whereas \aebench
+  runs external agent CLIs rather than using this planning graph.
+Our goal is more to compare external agents under independent oracles, 
+  and examine their changes to the experimental procedure.
 
 \paragraph{\aebench vs CORE-Bench}
 CORE-Bench~\cite{siegel-tmlr25} evaluates agents that reproduce numerical results from
