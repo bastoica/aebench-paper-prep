@@ -36,6 +36,19 @@ Its graph supports error recovery and tracking execution state, whereas \aebench
 Our goal is more to compare external agents under independent oracles, 
   and examine their changes to the experimental procedure.
 
+\paragraph{\aebench vs MLSys AE Agent}
+Yang~\cite{yang-blog26} describes an artifact-evaluation agent deployed as a reviewer
+  at MLSys\textquotesingle26, connected with HotCRP and a real review machine.
+It reads papers, runs software, asks authors questions and prepares a badge decision,
+  so it is not only a simple benchmark run.
+It can return after an author response and continue the review, which makes its
+  execution different from one isolated reproduction trial with a fixed input.
+\aebench is not a conference reviewer and does not manage the author discussion.
+This is a substantial system for actual peer review, including comments and badge
+  decisions, whereas AEBench does not automatically become a reviewer.
+Instead it provides repeatable cases and oracles to study what different agents do
+  when reproducing the same artifact.
+
 \paragraph{\aebench vs CORE-Bench}
 CORE-Bench~\cite{siegel-tmlr25} evaluates agents that reproduce numerical results from
   provided research code and data, using 270 tasks from 90 papers.
@@ -86,15 +99,6 @@ Their approach is directed to helping reviewers decide the reproducibility of
 \aebench also tries to reduce evaluation work, but its main output is a repeatable
   agent run with checks and recorded activity.
 These are related goals, although the workflow and evaluation unit are different.
-
-\paragraph{\aebench vs MLSys AE Agent}
-Yang~\cite{yang-blog26} describes an artifact-evaluation agent deployed as a reviewer
-  at MLSys\textquotesingle26, connected with HotCRP and a real review machine.
-It reads papers, runs software, asks authors questions and prepares a badge decision,
-  so it is not only a simple benchmark run.
-\aebench is not a conference reviewer and does not manage the author discussion.
-Instead it provides repeatable cases and oracles to study what different agents do
-  when reproducing the same artifact.
 
 \paragraph{\aebench vs Reward Hacking Benchmark}
 The Reward Hacking Benchmark~\cite{thaman-icml26} gives tool-using agents tasks with
