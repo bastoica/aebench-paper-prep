@@ -21,20 +21,30 @@ It runs an external coding agent on the provided artifact and
   checks the stages and its resulting environment.
 
 \paragraph{\aebench vs ArtifactCopilot}
-ArtifactCopilot~\cite{wu-arxiv26} automates artifact evaluation by converting 
-  README instructions into a dependency-aware graph, and then running the operations 
-  in this graph.
-It also tracks the execution environment, handles errors, and compares the  
-  evaluation with human badge decisions on 48 artifacts.
-It also constructs a golden command set to represent important README commands 
-  assessing functional evaluation, which is a stronger verification 
-  than only checking files.
-This is quite close to \aebench, including the attention to commands and 
-  documented steps.
-Its graph supports error recovery and tracking execution state, whereas \aebench
-  runs external agent CLIs rather than using this planning graph.
-Our goal is more to compare external agents under independent oracles, 
-  and examine their changes to the experimental procedure.
+
+ArtifactCopilot~\cite{wu-arxiv26} is an agent-based framework for automating
+  artifact evaluation, including environment preparation, experiment execution
+  and badge decisions.
+Its latest version uses ArtifactGuide, a rubric that defines evaluation
+  requirements, evidence levels and different types of reviewer interventions.
+In particular, it distinguishes environment repairs from changes that modify
+  the original experiment, which is also relevant to our work.
+The system records execution evidence and checks whether the evidence supports
+  the reviewer's conclusions, and it compares the resulting badge decisions
+  against human evaluation on 60 artifacts.
+\aebench has a different objective, since we evaluate the coding agents that
+  perform artifact reproduction, rather than developing an agent to review
+  and assign badges.
+We use independent artifact-specific oracles to measure reproduction progress
+  and record the execution of external coding agents.
+This allows us to study how different agents react to failures, which changes
+  they introduce in the artifact, and whether they continue with the original
+  experiments or execute a modified procedure.
+ArtifactCopilot already considers the validity of reviewer interventions,
+  but does not systematically evaluate these behaviors of general coding agents
+  under controlled reproduction tasks.
+In particular, we are interested in cases where an agent passes the output
+  checks even if the reproduced experiment was changed.
 
 \paragraph{\aebench vs MLSys AE Agent}
 Yang~\cite{yang-blog26} describes an artifact-evaluation agent deployed as a reviewer
