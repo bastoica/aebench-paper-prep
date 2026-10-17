@@ -5,20 +5,32 @@ We compare \aebench with similar recent works that use agents
   or that build benchmarks to test both such agents.
 
 \paragraph{\aebench vs Artisan}
-Artisan~\cite{baek-arxiv26} is an agent for reproducing results from software
-  engineering papers by generating a standalone script that can run 
-  independently of agent.
-It evaluates 60 tasks from 23 papers and uses output and method LLM-as-judges 
-  to verify the generated script, including checks against 
-  copying existing results.
-This script can be rerun, while the method judge tests more than numbers, 
-  including invalid methods.
-\aebench does not ask the agent to produce a separate 
-  reproduction script as the main product.
-Its independent script also gives executable evidence, but it is 
-  not the same artifact operation trace made by a general coding agent.
-It runs an external coding agent on the provided artifact and 
-  checks the stages and its resulting environment.
+
+Artisan~\cite{baek-ase26} is an agent for reproducing numerical results from
+  software engineering papers by generating a standalone reproduction script.
+It evaluates 60 tasks from 23 papers, and uses an execution-based output judge
+  and an LLM method judge to verify that the script produces the expected
+  results and does not simply copy precomputed values.
+The method judge distinguishes copied results, last-mile reproduction and
+  full reproduction, and accepts the latter two as successful.
+This is quite related to \aebench, since it also considers how the results
+  were produced, and not only whether the numbers are correct.
+
+However, Artisan formulates reproduction as a code generation task, where
+  the agent needs to produce a script for reproducing a specific table.
+\aebench instead evaluates external coding agents operating an existing
+  artifact, including environment setup, build, benchmark preparation and
+  execution of the experiments.
+An important difference is that Artisan accepts last-mile reproduction,
+  which can skip some expensive experimental steps and use existing raw data.
+In \aebench we want to check whether the agent performed the actual
+  experiment required by the artifact, and not only obtained similar results.
+We also want to study the changes agents make during the reproduction,
+  including cases where fixing an execution error modifies the experimental
+  procedure.
+Artisan verifies the submitted script and its reproduction method, whereas
+  our goal is also to examine whether the agent followed the documented
+  procedure, and which deviations resulted in an invalid reproduction.
 
 \paragraph{\aebench vs ArtifactCopilot}
 
