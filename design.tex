@@ -120,6 +120,43 @@ This setup allows us to investigate and measure different agents on
 %% here we can describe the oracles, but perhaps the title is of
 %% this section is a bit unfortunate :-)
 
+Agents can terminate successfully, report success, 
+  or generate expected-looking output files without 
+  completing the reproduction~\cite{yang-blog26, wu-arxiv26, baek-ase26}.
+We also observe similar behavior in our experiments.
+Worse still, reproduction involves multiple 
+  operations, and an agent may successfully complete 
+  some without reaching (or even skipping) others.
+
+Thus, to check for this, \aebench runs execution checkers 
+  derived from the artifact's README (so, specific 
+  to the artifact) and tracks agent execution trace 
+  independent of the agent itself.
+
+These evaluation oracles examine the resulting environment 
+  and evaluate four reproduction phases: 
+  environment setup (did the agent succesfully setup the 
+  experimental environment as required by the artifact?), 
+  artifact build (did the agent compiled/build the artifact 
+  components successfully), dataset preparation (did the agent 
+  successfully downloaded and setup the datasets need for the experiments), 
+  and experiment execution (did the agent executed the experiments and 
+  generated the expected outputs?).
+This separation also makes partial progress more visible and 
+  allows to compar different agents on how they preform on 
+  different subtasks of the reproducibility life-cycle.
+~\bo{Should explain why the four phases are useful and whether 
+  they are sufficiently general for the artifacts in the benchmark.}
+
+  Note that passing all these checks doesn't guarantee the agent 
+  actually ran the artifact.
+For example, an agent could successfully setup, install, and download 
+  datasets, but then find results from the paper PDF and simply 
+  paste them into the expected output format without actually running 
+  the experiment~\cite{wu-arxiv26, baek-ase26}
+
+
+
 \subsection{Validating Agent's Work}
 
 %% explain how \aebench runs the oracles and uses the command trace 
