@@ -93,6 +93,26 @@ Then humans (either the creators of the artifact
 \subsection{Executing an Agent}
 
 %% here we can start by explaining the lifecycle of an artifact
+The key role of \aebench is to be a platform for running 
+  and evaluating agents that attempt to reproduce 
+  scientific results.
+Thus, \aebench doesn't implement its own agent or 
+  reasoning loop.
+Instead, it delegates planning and tool usage to 
+  off-the-shelf, external agents.
+The framework controls the execution environment, provides task 
+  instructions, sets execution budgets, and provides monitoring 
+  during the agent run.
+Once done, it also runs a series of checks to validate and evaluate 
+  the agents work.
+The agent decides what commands to run, how best to follow instructions, 
+  what to execute and what to skip, and, most importantly, when it 
+  reasons when to terminate, either it fully reproduce the artifact 
+  and successfully executed the experiments, or some unsurmountable blocker 
+  has occurred.
+
+This setup allows us to investigate and measure different agents on 
+  the same task.
 
 
 \subsection{Evaluating Reproducibility}
