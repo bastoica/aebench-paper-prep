@@ -64,6 +64,20 @@ More importantly, these checks are exercised once
   or not the agent actually ran and reproduced 
   results were obtained.
 
+\aebench takes as input the artifact with its README 
+  that lists installation, compilation, dataset preparation, 
+  and experiment execution steps.
+It also takes a set of four oracles for each the four 
+  stages of running and reproducing results 
+  ~\bo{I initially called this ``artifact evaluation stages'',
+  but now I'm afraid it will focus the paper too much on 
+  how artifact evaluation is done as opposed to how 
+  experiments in general are ran using software artifacts.
+  So I need a better way to describe this early on}
+Finally it takes a configuration file that specifies the 
+  prompt along with execution parameters (where to execute 
+  the artifact -- Docker vs. local machine, for how long, etc.)
+
 One interesting question is how to determine the checks themselves 
   are correct.
 Our framework relies on agent-human interaction to do so.
