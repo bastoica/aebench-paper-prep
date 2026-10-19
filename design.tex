@@ -1,5 +1,68 @@
 \section{Design}
 
+
+%% Introduce AEBench overall workflow and a few key design points
+%% so we don't have to keep repeating them over and over
+
+
+\aebench is a framework for running and evaluating AI coding agents on artifact evaluation tasks. 
+The main feature of \aebench is running the agents and recording runtime information
+  to allow to validate whether or not the artifact actually ran the artifact and 
+  didn't fake the results by copying them from the paper or artifact repository 
+  through repository history.
+  
+\aebench runs an agent in a controlled environment, allows it to attempt the documented 
+  reproduction procedure documented in the README file of the artifact, evaluates the result 
+  using artifact specific checks which we called oracles, and checks the commands that 
+  the agent runs against the README.
+
+We design \aebench to implement both the execution framework and the evaluation framework
+  but the two are separated and agents cannot see the evaluation stage.
+
+\begin{itemize}
+  \item \aebench execution framework prepares the artifact, launches an AI agent, manages its environment, and records what happens.
+  \item \aebench evaluation framework independently checks whether the agent successfully reproduced the artifact's expected behavior or results.
+\end{itemize}
+
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics[width=\linewidth]{figs/aebench-workflow.pdf}
+    \caption{\small \aebench runs an agent that operates an artifact 
+    inside a containerized workspace and executing commands through a proxy 
+    shell that traces the agent's execution. \aebench then validates the 
+    final workspace state at each execution stage using stage-specific 
+    oracles and generates the evaluation score and execution reports.}
+    \label{fig:aebench-overview}
+\end{figure}
+
+At a high level, AEBench has seven functional components.
+
+\subsection{Agent Reproduction Task}
+
+%% the unit of work is the artifact, configs, and oracles (what is called "case")
+%% in our repository, although we need to change that (borrowed from DBs, but not 
+%% a great or informative term)
+
+
+\subsection{Executing an Agent}
+
+%% here we can start by explaining the lifecycle of an artifact
+
+
+\subsection{Evaluating Reproducibility}
+
+%% here we can describe the oracles, but perhaps the title is of
+%% this section is a bit unfortunate :-)
+
+\subsection{Validating Agent's Work}
+
+%% explain how \aebench runs the oracles and uses the command trace 
+%% to assess instruction following through the llm-as-a-judge module
+
+
+\bo{Text below needs to be reorganized, summarized, and maybe some of the original moved to appendix.}
+
 \aebench is a framework for running and evaluating AI coding agents on artifact evaluation tasks. 
 The main feature of \aebench is running the agents and recording runtime information
   to allow to validate whether or not the artifact actually ran the artifact and 
