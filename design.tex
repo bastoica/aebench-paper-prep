@@ -44,6 +44,37 @@ At a high level, AEBench has seven functional components.
 %% in our repository, although we need to change that (borrowed from DBs, but not 
 %% a great or informative term)
 
+%% how to represent heterogeneous artifacts in a agentic environment?
+
+Artifacts are heterogeneous.
+Some require complex installation,
+  others a multi-step build and installation system,
+  others still require to setup and run complicated 
+  experiments that run for hours or even days.
+Therefore a generic correctness check to indicate whether 
+  the agent has successfully ran and reproduced the artifact 
+  is impractical.
+
+To solve this problem, \aebench uses a shared 
+  four stage evaluation framework with 
+  checks derived from the artifacts themselves.
+More importantly, these checks are exercised once 
+  the agent terminates so that the reproduction 
+  workflow and the conditions determining whether 
+  or not the agent actually ran and reproduced 
+  results were obtained.
+
+One interesting question is how to determine the checks themselves 
+  are correct.
+Our framework relies on agent-human interaction to do so.
+An agent extracts the set of requirements and steps from 
+  the artifact's README.
+Then uses a pre-defined template and evaluation APIs to 
+  generate checkers in a particular shape.
+Then humans (either the creators of the artifact 
+  or the evaluators themselves) are asked to validate 
+  those checkers and add ground truth results.
+
 
 \subsection{Executing an Agent}
 
